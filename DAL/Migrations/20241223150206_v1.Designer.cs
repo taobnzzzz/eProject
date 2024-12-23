@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(FlightContext))]
-    [Migration("20241223145154_v1")]
+    [Migration("20241223150206_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -222,7 +222,7 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Reservation");

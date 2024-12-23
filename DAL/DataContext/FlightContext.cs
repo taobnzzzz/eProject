@@ -17,5 +17,18 @@ namespace DAL.DataContext
         public DbSet<Cancellation> Cancellations { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Thiết lập khóa ngoại giữa Payment và User
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.User)
+                .WithMany()
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.NoAction);  // Ngừng cascade delete
+
+
+        }
     }
 }
