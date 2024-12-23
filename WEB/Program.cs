@@ -1,7 +1,15 @@
+using BLL.Services;
+using DAL.DataContext;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<FlightContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConn")));
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 
@@ -17,6 +25,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
 
 app.UseAuthorization();
 
